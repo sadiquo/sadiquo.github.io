@@ -1,0 +1,21 @@
+body{
+    background: #444444;
+    color: white;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+h1{
+    margin: 10px;
+    text-align: center;
+    font-size: 100px;
+}
+
+#main{
+    margin: 5%;
+    font-size: 30px;
+}
+
+a { 
+    text-decoration: none; 
+    color: darkblue;
+}

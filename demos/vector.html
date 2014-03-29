@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Vector</title>
+    </head>
+
+    <body>
+
+        <canvas id="canvas">
+            Ton navigateur ne supporte pas canvas, merci de <a href="http://browsehappy.com">le mettre à jour</a>
+        </canvas>
+        
+        <script>
+
+            var canvas = document.getElementById('canvas'), ctx = canvas.getContext('2d'),
+                WIDTH = 1100, HEIGHT = 750, wall, light;
+
+            canvas.width = WIDTH;
+            canvas.height = HEIGHT;
+
+            wall = new Wall(Math.random() * WIDTH, Math.random() * HEIGHT, Math.random() * WIDTH, Math.random() * HEIGHT);
+            light = new Ray(Math.random() * WIDTH, 475, 0, 0);
+
+            wall.draw();
+
+            window.addEventListener('mousemove', function(e){
+
+                light.vect.x = e.clientX - light.x - canvas.offsetLeft;
+                light.vect.y =  e.clientY - light.y - canvas.offsetTop;
+
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+                wall.draw();
+                light.draw();
+
+            }, false);
+
+
+            function Wall(x, y, endX, endY){
+
+                this.x = x;
+                this.y = y;
+                this.end = {x: endX, y: endY};
+                this.vect = {x: this.end.x - x, y: this.end.y - y};
+
+                this.draw = function(){
+                    ctx.beginPath();
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(this.end.x, this.end.y);
+                    ctx.closePath();
+                    ctx.stroke();
+                };
+
+            }
+
+
+            function Ray(x, y, vectorX, vectorY){
+
+                this.x = x;
+                this.y = y;
+                this.vect = {x: vectorX, y: vectorY};
+                
+                this.draw = function(){
+                    
+                    if(!this.vect.x && !this.vect.y){ 
+                        return false; 
+                    }
+
+                    var inter = findIntersect(this, wall);
+
+                    if ((inter.x <= wall.x == inter.x < wall.end.x) ||
+                        (inter.y <= wall.y == inter.y < wall.end.y) ||
+                        inter.x <= this.x != this.vect.x <= 0 ||
+                        inter.y <= this.y != this.vect.y <= 0){
+
+                        var c = Math.min(
+                            ((this.vect.x > 0) ? WIDTH - this.x : this.x) / Math.abs(this.vect.x),
+                            ((this.vect.y > 0) ? HEIGHT - this.y : this.y) / Math.abs(this.vect.y)
+                        );
+
+                        inter.x = this.x + this.vect.x * c;
+                        inter.y = this.y + this.vect.y * c;
+                        
+                    }
+
+                    ctx.beginPath();
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(inter.x, inter.y);
+                    ctx.closePath();
+                    ctx.stroke();
+
+                };
+
+            }
+
+            function findIntersect(ln1, ln2){ // ln: {x, y, vect} 
+
+                var c1 = ln1.vect.y / ln1.vect.x, c2 = ln2.vect.y / ln2.vect.x,
+                    g1 = ln1.y - ln1.x * c1, g2 = ln2.y - ln2.x * c2,
+                    x = (g1 - g2) / (c2 - c1);
+
+                if(!ln1.vect.x){ return {x: ln1.x, y: ln1.x * c2 + g2}; }
+                if(!ln2.vect.x){ return {x: ln2.x, y: ln2.x * c1 + g1}; }
+
+                return {x: x, y: x * c1 + g1};
+
+            }
+
+        </script>
+
+    </body>
+
+</html>

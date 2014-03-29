@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Sadiquo / Boulier</title>
+    </head>
+
+    <body>
+        <svg width="1100" height="700" id="svg">
+            
+            <radialGradient id="gradient">
+               <stop offset="30%" style="stop-color:rgb(0,0,255);"/>
+               <stop offset="100%" style="stop-color:rgb(0,0,160);"/>
+            </radialGradient>
+
+            <rect x="10" y="10" width="1080" height="680" rx="10" style="fill:transparent;stroke:black;stroke-width:20px;"/>
+            <rect x="10" y="210" width="1080" height="20" />
+
+	    </svg>
+        
+        <script>
+            
+            var svg = document.getElementById('svg'), i, e, stick, ball, move = 0, arr = [];
+            
+            function attr(target, name, value){
+                if(value) target.setAttributeNS(null, name, value);
+                return target.getAttributeNS(null, name);
+            }
+            
+            for(i = 0; i < 7; i++){
+
+                stick = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
+                attr(stick, "x", i * 135 + 135);
+                attr(stick, "y", 10);
+                attr(stick, "width", 20);
+                attr(stick, "height", 680);
+                svg.appendChild(stick);
+
+                for(e = 0; e < 7; e++){
+                    ball = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
+                    attr(ball, "x", i * 135 + 100);
+                    attr(ball, "y", e * 50 + 20 + (e > 1) * 310);
+                    attr(ball, "width",92);
+                    attr(ball, "height", 50);
+                    attr(ball, "style", "fill:url(#gradient);");
+                    attr(ball, "rx", 30);
+                    ball.onmousedown = function(e){ move = this; };
+                    arr.push(svg.appendChild(ball));
+                }
+
+            }
+
+            onmouseup = function(){move = 0;};
+            ondragstart = function(e){e.preventDefault();};
+            
+            onmousemove = function(e){ 
+            
+                if(!move) return;
+
+                var n = arr.indexOf(move), floor = n - n % 7, 
+                    mouse = e.clientY - 30, way = (attr(arr[n], 'y') < mouse) * 2 - 1,
+                    u1 = 20 + (n % 7) * 50 + 110 * ((n % 7) > 1), u2 = 110 + (n % 7) * 50 + 220 * ((n % 7) > 1);
+
+                attr(arr[n], 'y', mouse);
+                
+                if(mouse < u1) { attr(move, 'y', u1); }
+                if(mouse > u2) { attr(move, 'y', u2); }
+
+                while(n >= floor && n <= floor + 6 &&
+                    n % 7 != 3 + way * 3 &&
+                    (attr(arr[n + way], 'y') - attr(arr[n], 'y')) * way < 50){
+
+                    attr(arr[n + way], 'y', +attr(arr[n], 'y') + 50 * way);
+                    n += way;
+
+                }
+            
+            };
+            
+        </script>
+
+    </body>
+    
+    
+
+</html>
