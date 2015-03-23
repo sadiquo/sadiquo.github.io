@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Stars-Map</title>
+        <style>
+            canvas, svg{
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <canvas width="750" height="750" id="map"></canvas>
+        <svg width="750" height="750">
+            <circle cx="375" cy="375" r="455" stroke="black" stroke-width="160" fill="none"/>
+        </svg>
+        <script src="../files/data-stars.js"></script>
+        <script src="stars-map.js"></script>
+    </body>
+
+</html>
