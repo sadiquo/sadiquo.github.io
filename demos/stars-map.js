@@ -1,18 +1,20 @@
 var canvas = document.getElementById('map'), WIDTH = canvas.width, HEIGHT = canvas.height, zoom = 1,
     radius = Math.min(WIDTH, HEIGHT) / 2, mouse = {down: false, pos: {x: 0, y: 0}},
     ctx = canvas.getContext('2d'), Camera = {angularPosition: {x: Math.PI / 2, y: 0}},
-    cos = Math.cos, sin = Math.sin;
+    cos = Math.cos, sin = Math.sin, objects = [];
 
 ctx.translate(WIDTH / 2, HEIGHT / 2);
 
 
-for(var i = 0; i < objects.length; i++){
-    var obj = objects[i], angX = obj.angularPos.x / 12 * Math.PI, angY = obj.angularPos.y / 180 * Math.PI;
+for(var i = 0; i < datas.length; i++){
+    var obj = {}, data = datas[i], angX = data[1] / 12 * Math.PI, angY = data[2] / 180 * Math.PI;
+    obj.size = data[0];
     obj.pos = {
         x: radius * cos(angY) * cos(angX),
         y: -radius * sin(angY),
         z: radius * cos(angY) * sin(angX)
     }
+    objects.push(obj);
 }
 
 render();
