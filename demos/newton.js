@@ -64,7 +64,7 @@ window.onload = function(){ // Initialisation
         a.i = +document.getElementById('a-i-input').value;
         epsilon = +document.getElementById('epsilon-input').value;
         epsilon *= epsilon;
-        precison = +document.getElementById('precision-input').value;
+        precision = +document.getElementById('precision-input').value;
         
         render();
     };
