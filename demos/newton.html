@@ -8,12 +8,24 @@
             html, body{
                 margin: 0;
             }
+
+            #canvas{
+                float: left;
+            }
         </style>
     </head>
 
     <body>
         <canvas id="canvas" width="500" height="500">Ton navigateur en suporte pas canvas.</canvas>
-        <script src="newton.js"></script>
+        <div id="param">
+            Résoudre l'equation z^<input id="nb-input" type="text" value="3">-1 = 0<br>
+            a: <input type="text" id="a-r-input" value="1"> + i <input type="text" id="a-i-input" value="0"> <br>
+            epsilon: <input type="text" id="epsilon-input" value="0.0001"><br>
+            nombre d'iterations max: <input type="text" id="precision-input" value="200"><br>
+            
+            <button id="send">Afficher</button>
+            <script src="newton.js"></script>
+        </div>
     </body>
 
 </html>
