@@ -1,11 +1,22 @@
-var canvas, WIDTH, HEIGHT, ctx, y, scale, mouseX, mouseY,
+var canvas, WIDTH, HEIGHT, ctx, y, scale, mouseX, mouseY, solutions,
+    colors = [[100, 255/2, 255], [100, 0, 255], [0, 200, 255], [200, 0, 255],
+        [100, 50, 100], [70, 210, 40], [90, 255, 100], [70, 30, 200], [240, 210, 40], [90, 150, 200],
+        [40, 180, 210], [210, 180, 120], [147, 110, 210], [11, 220, 175], [230, 20, 170], [155, 144, 240]];
     process = 0,
     scaleZoom = 1.685, // Vitesse de zoom
     precision = 200, // Nombre d'iteration maximum
     nb = 3, // L'exposant du polynome que l'ont résouds: z^nb-1=0
     epsilon = 1e-8,
-    a = {r: 1, i: 0}; 
+    a = {r: 1, i: 0};
+    
 
+function calculSolutions(){
+    solutions = [[{r: 1, i: 0}, colors[0]]];
+    for(var i = 1; i < nb; i++){
+        solutions.push([{r: Math.cos(i*Math.PI*2/nb), i: Math.sin(i*Math.PI*2/nb)}, colors[i]]);
+    }
+}
+    
 function calculColor(z){
 
     // Pour le calcul du polynome z^nb-1=0, on crée les variables pow=e^{nb-1} et pow2=e^nb
@@ -18,20 +29,13 @@ function calculColor(z){
         if(sqDist(pow2, {r: 1, i: 0}) < epsilon){ // Si le résulat est proche de 1
             
             // On regarde le signe de la partie réel et imaginaire pour choisir la couleur du pixel
-            
-            if(z.r > 0 && z.i > 0){
-                return [200, 0, 255 - n*(255/precision)];
+            for(var i = 0; i < solutions.length; i++){
+                if(sqDist(z, solutions[i][0]) < epsilon){
+                    return [solutions[i][1][0] * (1 - n/precision), solutions[i][1][1] * (1 - n/precision), solutions[i][1][2] * (1 - n/precision)];
+                }
             }
 
-            if(z.r > 0 && z.i < 0){
-                return [0, 200, 255 - n*(255/precision)];
-            }
-
-            if(z.r < 0 && z.i > 0){
-                return [100, 0, 255 - n*(255/precision)];
-            }
-
-            return [100, 255/2, 255 - n*(255/precision)];
+            return [255, 255, 255];
 
         }
 
@@ -52,6 +56,7 @@ window.onload = function(){ // Initialisation
     scale = 4/WIDTH;
     x = -2;
     y = -2*HEIGHT/WIDTH;
+    calculSolutions();
     
     render();
 
@@ -65,7 +70,7 @@ window.onload = function(){ // Initialisation
         epsilon = +document.getElementById('epsilon-input').value;
         epsilon *= epsilon;
         precision = +document.getElementById('precision-input').value;
-        
+        calculSolutions();
         render();
     };
 
@@ -105,8 +110,6 @@ function render(){ // Affichage de l'ensemble
         imageData.data[i*4 + 1] = color[1];
         imageData.data[i*4 + 2] = color[2];
         imageData.data[i*4 + 3] = 255;
-        
-
 
     }
 
