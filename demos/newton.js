@@ -57,7 +57,7 @@ window.onload = function(){ // Initialisation
     x = -2;
     y = -2*HEIGHT/WIDTH;
     calculSolutions();
-    
+    scale = 4/WIDTH;
     render();
 
     window.onmousemove = function(e){ mouseX = e.clientX; mouseY = e.clientY;};
