@@ -4,9 +4,9 @@ var canvas, WIDTH, HEIGHT, ctx, y, scale, mouseX, mouseY, solutions,
         [40, 180, 210], [210, 180, 120], [147, 110, 210], [11, 220, 175], [230, 20, 170], [155, 144, 240]];
     process = 0,
     scaleZoom = 1.685, // Vitesse de zoom
-    precision = 200, // Nombre d'iteration maximum
-    nb = 3, // L'exposant du polynome que l'ont résouds: z^nb-1=0
-    epsilon = 1e-8,
+    precision = 60, // Nombre d'iteration maximum
+    nb = 6, // L'exposant du polynome que l'ont résouds: z^nb-1=0
+    epsilon = 0.01,
     a = {r: 1, i: 0};
     
 
