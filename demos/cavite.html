@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Particule quantique dans une cavité</title>
+        <style>
+            #param{ 
+                list-style-type: none;
+                display: inline-block;
+                vertical-align: top;
+            }
+            .blue{ color: blue; }
+            .red{ color: red; }
+            .black{ color: black; }
+        
+        </style>
+    </head>
+
+    <body>
+        <canvas id="canvas" width="700" height="600">Ton navigateur ne supporte pas HTML5</canvas>
+        <ul id="param">
+            <li><span class="blue">Réel</span>: <input class="check" type="checkbox" checked></li>
+            <li><span class="red">Imaginaire</span>: <input class="check" type="checkbox" checked></li>
+            <li><span class="black">Norme</span>: <input class="check" type="checkbox" checked></li>
+            <li>Pulsation: <input id="pulse" min="0" max="1" step="0.001" type="range" value="0.5"><span id="valpulse">0.5</span></li>
+            <li>Mode 1: <input class="mode" min="0" max="1" step="0.001" type="range" value="1"><span class="val">1</span></li>
+            <li>Mode 2: <input class="mode" min="0" max="1" step="0.001" type="range" value="0"><span class="val">0</span></li>
+            <li>Mode 3: <input class="mode" min="0" max="1" step="0.001" type="range" value="0"><span class="val">0</span></li>
+            <li>Mode 4: <input class="mode" min="0" max="1" step="0.001" type="range" value="0"><span class="val">0</span></li>
+            <li>Mode 5: <input class="mode" min="0" max="1" step="0.001" type="range" value="0"><span class="val">0</span></li>
+            <li>Mode 6: <input class="mode" min="0" max="1" step="0.001" type="range" value="0"><span class="val">0</span></li>
+        </ul>
+        <script src="/files/js/cavite.js"></script>
+    </body>
+
+</html> 
